@@ -1,7 +1,7 @@
 <template>
   <div class="about">
-    <!-- <BaseForm/> -->
-    <h1>Posts</h1>
+    <BaseForm/>
+    <h1>Posts Publicados</h1>
     <Posts/>
     <!-- <ul>
       <li v-for="post in posts" :key="post.id">
@@ -18,7 +18,7 @@ export default {
   name: 'PostsView',
   components: {
     Posts
-  }
+  },
 
   // created() {
   //   postService.get()
@@ -31,3 +31,4 @@ export default {
   // }
 }
 </script>
+

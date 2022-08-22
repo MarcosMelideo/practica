@@ -10,12 +10,14 @@
             :titulo="item.title"
             @eliminarItem="eliminarItem($index)">
         </Tarea>
+        <TareaDetalles/>
     </div>
 </template>
 
 <script>
     import todoService from '@/services/todoService.js';
     import Tarea from '@/components/Tarea';
+    import TareaDetalles from '@/components/TareaDetalles.vue';
     import {crudItemsMixin} from "@/mixins/cruditems.js";
     export default {
         name: 'Tareas',
@@ -31,7 +33,8 @@
 
         },
         components: {
-            Tarea
+            Tarea,
+            TareaDetalles
         }
     }
 </script>

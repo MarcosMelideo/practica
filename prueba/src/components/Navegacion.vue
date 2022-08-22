@@ -3,7 +3,7 @@
     <Logo />
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/post">Posts</router-link>
+      <RouterLink :to="{name: 'posts'}">Posts</RouterLink>
     </nav>
   </div>
 </template>

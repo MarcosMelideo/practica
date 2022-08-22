@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import HomeView from '@/views/PostView.vue'
-import router from './router'
+import Vue from 'vue';
+import Router from 'vue-router';
+import HomeView from '@/views/HomeView.vue';
+import PostView from '@/views/PostView.vue';
+import Post from '@/components/Post.vue';
+// import router from './router';
 
-Vue.use(VueRouter)
+Vue.use(Router);
 
-export default new router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -14,7 +15,31 @@ export default new router({
     },
     {
       path: '/posts',
-      component: PosttView
+      name: 'posts', //10.35
+      component: PostView
+    },
+    {
+      path: '/posts/:id',
+      name: 'post',
+      component: Post,
+      meta: {
+        auth: true,
+      }
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 });
+
+const authUser = true;
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.auth && !authUser)
+        next('/');
+    else 
+        next();
+});
+
+export default router; 

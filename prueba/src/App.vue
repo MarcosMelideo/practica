@@ -6,8 +6,8 @@
       <RouterLink destino="black-cat-1"/>
       <RouterLink destino="black-cat-2"/>
       <RouterLink destino="black-cat-3"/>
-    </ul>
-    <RouterView/> -->
+    </ul>-->
+    <RouterView/> 
   </div>
 </template>
 
@@ -48,11 +48,12 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+/*
 ul{
   padding: 0;
   position: absolute;
   width: 100%;
   display: flex;
   justify-content: space-around;
-}
+} */
 </style>
