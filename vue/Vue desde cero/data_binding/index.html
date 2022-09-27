@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .user-info {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid;
+            border-radius: 25px;
+            font-family: sans-serif;
+        }
+
+        .logged-in {
+            background-color: rgb(144, 238, 192);
+        }
+
+        .logged-out {
+            background-color: rgb(255, 107, 107);
+        }
+    </style>
+</head>
+<body>
+    <main id="app">
+        <span>Log-in/out</span>
+        <input type="checkbox" v-model="logged">
+
+        <article class="user-info" :class="estilos">
+            {{ mensaje }}
+        </article>
+
+        <pre>{{ $data }}</pre>
+    </main>
+    <script src="vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                logged: true,
+                mensajes: {
+                    in: "Logeado como Marcos.",
+                    out: "Te has desconectado."
+                },
+                claseBase: 'user-info'
+            },
+            computed: {
+                mensaje() {
+                    return this.logged ? this.mensajes.in : this.mensajes.out;
+                },
+                estilos() {
+                    return `logged-${this.logged ? 'in' : 'out'}`;
+                }
+            }
+        });
+        Vue.config.devtools = true;
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorama</title>
+    <style>
+        li {
+            list-style: none;
+        }
+        button {
+            border: 1px outset blue;
+            background-color: lightBlue;
+            height:100px;
+            width:100px;
+            cursor:pointer;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" style="position: absolute; top: 10%; left: 40%; ">
+        <div v-for="fila in objetos">
+            <celda v-for="valor in fila" :celda="valor"></celda>
+        </div>
+    </div>
+
+    <script src="vue.js"></script>
+
+    <script type="text/x-template" id="celda-template">
+        <button @click="comparar">{{celda.abajo}}</button>
+    </script>
+
+    <script>
+        const celda = {
+            props: ["celda"],
+            template: "#celda-template",
+            methods: {
+                comparar() {
+                    if (this.celda.visto === false && this.celda.bloquear=== false) {
+
+                        this.$root.objetos[this.celda.posicion_lista][this.celda.posicion_celda].abajo = this.celda.valor;
+                        this.$root.objetos[this.celda.posicion_lista][this.celda.posicion_celda].visto = true;
+
+                        if (this.$root.vistos===1) {
+                            this.$root.n2 = this.celda.valor;
+                            this.$root.celda2_posicion = this.celda.posicion_celda;
+                            this.$root.celda2_lista = this.celda.posicion_lista;
+
+                            if (this.$root.n1===this.$root.n2) {
+                                this.$root.vistos = 0;
+                                this.$root.n1 = 0;
+                                this.$root.n2 = 0;
+                            }
+                            else{
+                                // for (i=0 ; i<4 ; i++) {
+                                //     for (j=0 ; j<3 ; j++) {
+                                //         if (this.$root.objetos[i][j].visto === false) {
+                                //             this.$root.objetos[i][j].bloquear = true;
+                                //             console.log(this.$root.objetos[i][j]);
+                                //         }
+                                //     }
+                                // }
+                                //console.log(this.$root.objetos);
+                                setTimeout(vm.no_iguales, 500); 
+
+                                // for (i=0 ; i<4 ; i++) {
+                                //     for (j=0 ; j<3 ; j++) {
+                                //         if (this.$root.objetos[i][j].visto === false) {
+                                //             this.$root.objetos[i][j].bloquear = false;
+                                //         }
+                                //     }
+                                // }
+                            }
+                        }
+                        else {
+                            this.$root.n1 = this.celda.valor;
+                            this.$root.vistos = 1;
+                            this.$root.celda1_posicion = this.celda.posicion_celda;
+                            this.$root.celda1_lista = this.celda.posicion_lista;
+                        }
+                    }
+
+                },
+                no_iguales(){
+                    this.$root.n1=0;
+                    this.$root.n2=0;
+                    this.$root.vistos=0;
+                    this.$root.objetos[this.$root.celda1_lista][this.$root.celda1_posicion].visto = false;
+                    this.$root.objetos[this.$root.celda2_lista][this.$root.celda2_posicion].visto = false;
+                    this.$root.objetos[this.$root.celda1_lista][this.$root.celda1_posicion].abajo = 0;
+                    this.$root.objetos[this.$root.celda2_lista][this.$root.celda2_posicion].abajo = 0;
+                }
+            },
+        };
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                valores: [],
+                objetos: [],
+                xd: [],
+                n1: 0,
+                n2: 0,
+                celda1_posicion: 0,
+                celda1_lista: 0,
+                celda2_posicion: 0,
+                celda2_lista: 0,
+                vistos: 0,
+            },
+            methods: {
+                cargar(){
+                    for (var k=1; k<7; k++) {
+                        this.valores.push(k);
+                    }
+                        
+                    this.valores = this.valores.concat(this.valores);
+                    this.valores.sort(function(a, b){return 0.5 - Math.random()});
+
+                    for (i=0 ; i<4 ; i++) {
+                        for (j=0 ; j<3 ; j++) {
+                            var n = this.valores[0];
+                            let obj = new class {
+                                abajo = 0;
+                                posicion_celda = j;
+                                posicion_lista = i;
+                                valor = n;
+                                visto = false;
+                                resuelto = false;
+                                bloquear = false;
+                            }
+                            this.xd.push(obj);
+                            this.valores.shift();
+                        }
+                        this.objetos.push(this.xd);
+                        this.xd = [];
+                    }
+                },
+                no_iguales(){
+                    this.n1=0;
+                    this.n2=0;
+                    this.vistos=0;
+                    this.objetos[this.celda1_lista][this.celda1_posicion].visto = false;
+                    this.objetos[this.celda2_lista][this.celda2_posicion].visto = false;
+                    this.objetos[this.celda1_lista][this.celda1_posicion].abajo = 0;
+                    this.objetos[this.celda2_lista][this.celda2_posicion].abajo = 0;
+                }
+            },
+            created(){
+                
+                this.cargar();
+            },
+            components: {
+                celda,
+            }
+        });
+
+        Vue.config.devtools = true;
+    </script>
+</body>
+</html>
