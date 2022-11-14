@@ -24,6 +24,8 @@
         <div v-for="fila in objetos">
             <celda v-for="valor in fila" :celda="valor"></celda>
         </div>
+        <h1 v-if="this.cantParesEncontrados===6">Felicidades Ganaste</h1>
+        <button @click="reiniciar()">reiniciar</button>
     </div>
 
     <script src="vue.js"></script>
@@ -52,26 +54,13 @@
                                 this.$root.vistos = 0;
                                 this.$root.n1 = 0;
                                 this.$root.n2 = 0;
+                                this.$root.cantParesEncontrados++;
+                                // if(this.$root.cantParesEncontrados===6){
+                                    
+                                // }
                             }
                             else{
-                                // for (i=0 ; i<4 ; i++) {
-                                //     for (j=0 ; j<3 ; j++) {
-                                //         if (this.$root.objetos[i][j].visto === false) {
-                                //             this.$root.objetos[i][j].bloquear = true;
-                                //             console.log(this.$root.objetos[i][j]);
-                                //         }
-                                //     }
-                                // }
-                                //console.log(this.$root.objetos);
-                                setTimeout(vm.no_iguales, 500); 
-
-                                // for (i=0 ; i<4 ; i++) {
-                                //     for (j=0 ; j<3 ; j++) {
-                                //         if (this.$root.objetos[i][j].visto === false) {
-                                //             this.$root.objetos[i][j].bloquear = false;
-                                //         }
-                                //     }
-                                // }
+                                setTimeout(vm.no_iguales, 500);
                             }
                         }
                         else {
@@ -108,6 +97,7 @@
                 celda2_posicion: 0,
                 celda2_lista: 0,
                 vistos: 0,
+                cantParesEncontrados: 0,
             },
             methods: {
                 cargar(){
@@ -145,10 +135,14 @@
                     this.objetos[this.celda2_lista][this.celda2_posicion].visto = false;
                     this.objetos[this.celda1_lista][this.celda1_posicion].abajo = 0;
                     this.objetos[this.celda2_lista][this.celda2_posicion].abajo = 0;
+                },
+                reiniciar(){
+                    this.cantParesEncontrados = 0;
+                    this.objetos = [];
+                    this.cargar();
                 }
             },
             created(){
-                
                 this.cargar();
             },
             components: {
