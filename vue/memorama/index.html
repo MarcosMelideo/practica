@@ -9,7 +9,7 @@
         li {
             list-style: none;
         }
-        button {
+        .boton {
             border: 1px outset blue;
             background-color: lightBlue;
             height:100px;
@@ -22,7 +22,7 @@
 <body>
     <div id="app" style="position: absolute; top: 10%; left: 40%; ">
         <div v-for="fila in objetos">
-            <celda v-for="valor in fila" :celda="valor"></celda>
+            <celda v-for="valor in fila" :celda="valor" class="boton"></celda>
         </div>
         <h1 v-if="this.cantParesEncontrados===6">Felicidades Ganaste</h1>
         <button @click="reiniciar()">reiniciar</button>
